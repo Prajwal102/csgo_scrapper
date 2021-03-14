@@ -18,16 +18,21 @@ def home():
     if request.method == 'POST':
         input_name = request.form.get("skin_name")
         print(f"skin name {input_name}")
+        futures = []
+        temp = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = []
-            f1 = executor.submit(steam,name=input_name)
-            f2 = executor.submit(bitskins,name=input_name)
-            f3 = executor.submit(skinport,name=input_name)
-            res1 = json.loads(f1.result())
-            res2 = json.loads(f2.result())
-            res3 = json.loads(f3.result())
-            print(res3)
-            temp = [res1,res2,res3]
+            for f in [steam,bitskins,skinport]:
+                f = executor.submit(f,name=input_name)
+                futures.append(f)
+            for future in concurrent.futures.as_completed(futures):
+                temp.append(json.loads(future.result()))
+            # f2 = executor.submit(bitskins,name=input_name)
+            # f3 = executor.submit(skinport,name=input_name)
+            # res1 = json.loads(f1.result())
+            # res2 = json.loads(f2.result())
+            # res3 = json.loads(f3.result())
+            # print(res3)
+            # temp = [res1,res2,res3]
             out = []
             for d in range(len(temp)):
                 out.append([temp[d]['source']])

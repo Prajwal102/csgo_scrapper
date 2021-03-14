@@ -60,5 +60,3 @@ def steam(name):
     return json.dumps(d)
     # except:
     #     print("some error")
-
-steam("awp neo noir")
