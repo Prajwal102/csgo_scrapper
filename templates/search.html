@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Flask Tutorial</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+ 
+    <form method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Skin Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" name="skin_name" placeholder="Enter skin name">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <table>
+
+      <tr>
+          <th> </th>
+          <th>Factory New</th>
+          <th>Minimal Wear</th>
+          <th>Field Tested</th>
+          <th>Well Worn</th>
+          <th>Battle Scarred</th>
+      </tr>
+
+      {% for i in data %}
+      <tr>
+      <th scope ="row"> {{ i[0] }} </th>
+      {% for x in range(1,i|length) %}
+        <td>{{ i[x][0] }}</td>
+        {% endfor %}   
+        {% endfor %}
+          
+        
+      </tr>
+
+      
+
+    </table>
+
+  </body>
+</html>
