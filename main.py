@@ -1,20 +1,61 @@
 from flask import Flask,render_template,request
 from Steam import steam
 from Bitskins import bitskins
-from Skinport import skinport
+from Skinport_new import skinport
 import json
 import concurrent.futures
+import mysql.connector
+
 
 app = Flask(__name__)
 
+
+config = {
+  'user': 'root',
+  'password': 'prajwal1234',
+  'host': '127.0.0.1',
+  'database': 'newdb',
+  'raise_on_warnings': True
+}
+
+cursor = None
+cnx = None
+
+try:
+  cnx = mysql.connector.connect(**config)
+except mysql.connector.Error as err:
+  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+    print("Something is wrong with your user name or password")
+  elif err.errno == errorcode.ER_BAD_DB_ERROR:
+    print("Database does not exist")
+  else:
+    print(err)
+
+  
 
 
 @app.route("/")
 def search():
     return render_template("home.html")
 
+
+@app.route("/fetchsuggestions",methods=['GET','POST'])
+def sugg_res():
+    global cursor
+    cursor = cnx.cursor()
+    requested_name = request.get_json()['skin_name']
+    if requested_name:  #perform checks
+      query = "(select name from awp where name like %s limit 6)"
+      cursor.execute(query,(requested_name,))
+      
+      return render_template("suggestions.html",data=cursor)
+    return "useless"
+
+
+
 @app.route("/search",methods=['GET','POST'])
 def home():
+    out = []
     if request.method == 'POST':
         input_name = request.form.get("skin_name")
         print(f"skin name {input_name}")
@@ -26,14 +67,6 @@ def home():
                 futures.append(f)
             for future in concurrent.futures.as_completed(futures):
                 temp.append(json.loads(future.result()))
-            # f2 = executor.submit(bitskins,name=input_name)
-            # f3 = executor.submit(skinport,name=input_name)
-            # res1 = json.loads(f1.result())
-            # res2 = json.loads(f2.result())
-            # res3 = json.loads(f3.result())
-            # print(res3)
-            # temp = [res1,res2,res3]
-            out = []
             for d in range(len(temp)):
                 out.append([temp[d]['source']])
                 for k,v in temp[d]['conditions'].items():

@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <title>Flask Tutorial</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
   </head>
   <body>
  
     <form method="POST">
       <div class="form-group">
         <label for="exampleInputEmail1">Skin Name</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" name="skin_name" placeholder="Enter skin name">
+        <input type="text" class="form-control" id="skin_search" name="skin_name" placeholder="Enter skin name">
+        <div id="suggesstion-box"></div>
         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>

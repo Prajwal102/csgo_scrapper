@@ -4,13 +4,52 @@
     <meta charset="utf-8">
     <title>Flask Tutorial</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          var val,timer;
+          $("#skin_search").bind('keyup',function(){
+            clearTimeout(timer);
+            var search = $(this).val();
+            if(search.length >= 3 && search != val){            
+            timer = setTimeout(function(){
+              val = search;
+              console.log("Ajax query",val);
+              var name_obj = {"skin_name":val}
+            $.ajax({
+            type: "POST",
+            url: "/fetchsuggestions",
+            data: JSON.stringify(name_obj),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            // <!-- beforeSend: function(){ -->
+            //   <!-- $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px"); -->
+            // // <!-- }, 
+            success: function(data){
+              console.log("returned from server",data);
+              // $("#suggesstion-box").show();
+              // $("#suggesstion-box").html(data);
+              // <!-- $("#search-box").css("background","#FFF"); -->
+            }
+            });
+                
+             
+              },1000)
+            }
+   
+          });
+        
+        });
+        </script>
+
+
   </head>
   <body>
  
     <form method="POST" action="/search">
       <div class="form-group">
         <label for="exampleInputEmail1">Skin Name</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" name="skin_name" placeholder="Enter skin name">
+        <input type="text" class="form-control" id="skin_search" name="skin_name" placeholder="Enter skin name">
         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
