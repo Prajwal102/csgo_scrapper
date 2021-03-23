@@ -45,11 +45,10 @@ def sugg_res():
     cursor = cnx.cursor()
     requested_name = request.get_json()['skin_name']
     if requested_name:  #perform checks
-      query = "(select name from awp where name like %s limit 6)"
-      cursor.execute(query,(requested_name,))
-      
-      return render_template("suggestions.html",data=cursor)
-    return "useless"
+      query = f"(select name from awp where name like '{requested_name}%' limit 6)"
+      cursor.execute(query)
+      rows = cursor.fetchall()
+      return render_template("suggestions.html",data=rows)
 
 
 
