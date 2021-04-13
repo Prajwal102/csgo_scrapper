@@ -10,18 +10,20 @@ import json
 
 
 def scrapper_func(url):
-    driver = webdriver.Chrome()
+    options = Options()
+    options.set_headless(headless=True)
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     try:
         iteminfo = "//div[@class='ItemPreview-itemInfo']"
-        element = WebDriverWait(driver, 3).until(
+        element = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH,iteminfo))
         )
 
         price = element.find_element_by_xpath(f"{iteminfo}/div[@class='ItemPreview-price']/div[@class='ItemPreview-priceValue']/div[@class='Tooltip-link']").text
         return price
     except:
-        pass
+        return 
 
     
 def get_root_url(name):
@@ -82,4 +84,4 @@ def skinport(name):
     return (json.dumps(d))
 
 
-# print(skinport("butterfly knife slaughter"))
+print(skinport("butterfly knife slaughter"))

@@ -5,68 +5,51 @@
     <title>Flask Tutorial</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script>
-        $(document).ready(function(){
-          var val,timer;
-          $("#skin_search").bind('keyup',function(){
-            clearTimeout(timer);
-            var search = $(this).val();
-            if(search.length >= 3 && search != val){            
-            timer = setTimeout(function(){
-              val = search;
-              console.log("Ajax query",val);
-              var name_obj = {"skin_name":val}
-            $.ajax({
-            type: "POST",
-            url: "/fetchsuggestions",
-            data: JSON.stringify(name_obj),
-            // dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            // <!-- beforeSend: function(){ -->
-            //   <!-- $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px"); -->
-            // // <!-- }, 
-            success: function(data){
-              console.log("print only on sucess")
-              // console.log("returned from server",data);
-              // $("#suggesstion-box").show();
-              $(".dropdown_list").html(data);
-              // <!-- $("#search-box").css("background","#FFF"); -->
-            }
-            });
-             
-              },1000)
-            }
-            else if(search.length == 0){
-              console.log("Empty");
-              $(".search_dropdown").hide();
-            }
-   
-          });
-        
-        });
-        </script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'load_sugges.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 
 
   </head>
   <body>
- 
-    <form method="POST" action="/search">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Skin Name</label>
-        <input type="text" class="form-control" id="skin_search" name="skin_name" placeholder="Enter skin name">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    <header>
+      <div class="wrap">
+        <form method="POST", action="/search">
+        <div class="search">
+           <input type="text" id="skin_search" class="searchTerm" placeholder="Search" spellcheck="false">
+           
+           <button type="submit" class="searchButton">
+             <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <div class ="search_dropdown">
+        <div class = "dropdown_list">
+           
+    
+        </div>
+    
       </div>
-      <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-    </form>
+     </div>
+
+
+  
+  </header> 
  
-    <div class ="search_dropdown">
-      <div class = "dropdown_list">
-
-
-      </div>
-
-
-
-    </div>
+  
+ 
   </body>
 </html>
+
+
+
+
+<!-- <form method="POST" action="/search">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Skin Name</label>
+    <input type="text" class="form-control" id="skin_search" name="skin_name" placeholder="Enter skin name">
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+  </div>
+  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+</form> -->

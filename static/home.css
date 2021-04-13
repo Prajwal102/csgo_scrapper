@@ -1,0 +1,91 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #212529;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+  }
+  
+  .searchTerm {
+    width: 80%;
+    background: none;
+    border: 3px solid white;     
+    font-size: 20px;
+    border-right: none;
+    border-radius: 0;
+    padding: 5px;
+    height:45px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #E35865;
+  }
+  
+  .searchTerm:focus{
+    color: #E35865;
+    /* border: 3px solid white;     */
+    
+  }
+  
+  .searchButton {
+    width: 50px;
+    height: 45px;
+    border: 3px solid white;
+    background: none;
+    text-align: center;
+    border-radius:0;
+    /* border-left:0; */
+    color: #E35865;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  
+  .searchButton:focus{
+    color: #E35865;
+    /* border: 3px solid white; */
+  }
+  /*Resize the wrap to see the search bar change!*/
+  .wrap{
+    width: 30%;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ::placeholder{
+      font-size:20px;
+    
+  }
+
+
+  ul {
+
+   
+    position: absolute;
+    padding: 10px; 
+    width: 80.5%;
+    /* margin: 80px auto 0; */
+    border: 2px solid white;
+    box-sizing: border-box;
+  }
+
+  ul li{
+      display: flex;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px 0;
+  }
+
+  ul li:hover{
+    transform: scale(1.09);
+    background: rgba(255, 255, 255, 0.1);
+
+  }

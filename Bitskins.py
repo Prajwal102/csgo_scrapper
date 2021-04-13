@@ -5,7 +5,7 @@ import concurrent.futures
 from requests import Request
 
 
-def get_responce(url):
+def get_response(url):
     # print(url)
     return requests.get(url).json()
     # return res.json()
@@ -52,7 +52,7 @@ def bitskins(name):
         for wear in item_wears:
             payload['item_wear'] = wear
             req = Request('GET',bitskins_endpoint,params=payload).prepare()
-            future = executor.submit(get_responce,url=req.url)
+            future = executor.submit(get_response,url=req.url)
             futures.append(future)
             
             # res = requests.get(bitskins_endpoint,params=payload)

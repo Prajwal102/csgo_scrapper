@@ -5,7 +5,8 @@ from Skinport_new import skinport
 import json
 import concurrent.futures
 import mysql.connector
-
+# #27272c
+# rgba(39,39,44,255)
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ try:
   cnx = mysql.connector.connect(**config)
 except mysql.connector.Error as err:
   if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
+    print("Something is wrong with user name or password")
   elif err.errno == errorcode.ER_BAD_DB_ERROR:
     print("Database does not exist")
   else:
@@ -45,7 +46,7 @@ def sugg_res():
     cursor = cnx.cursor()
     requested_name = request.get_json()['skin_name']
     if requested_name:  #perform checks
-      query = f"(select name from awp where name like '{requested_name}%' limit 6)"
+      query = f"(select name from skins where name like '{requested_name}%' limit 6)"
       cursor.execute(query)
       rows = cursor.fetchall()
       return render_template("suggestions.html",data=rows)
@@ -62,8 +63,8 @@ def home():
         temp = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for f in [steam,bitskins,skinport]:
-                f = executor.submit(f,name=input_name)
-                futures.append(f)
+                f1 = executor.submit(f,name=input_name)
+                futures.append(f1)
             for future in concurrent.futures.as_completed(futures):
                 temp.append(json.loads(future.result()))
             for d in range(len(temp)):
